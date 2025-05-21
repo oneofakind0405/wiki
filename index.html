@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wiki Search</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,13 +16,19 @@
                 <button id="searchButton">검색</button>
             </div>
         </div>
-        <div id="results" class="results">
-            <!-- 검색 결과가 여기에 표시됩니다 -->
+        <div class="swiper-container">
+            <div id="results" class="swiper-wrapper">
+                <!-- 검색 결과가 여기에 표시됩니다 -->
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
         <div id="loading" class="loading hidden">
             <div class="spinner"></div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

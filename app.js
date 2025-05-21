@@ -3,6 +3,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchButton = document.getElementById('searchButton');
     const resultsDiv = document.getElementById('results');
     const loadingDiv = document.getElementById('loading');
+    let swiper = null;
+
+    // Swiper 초기화 함수
+    function initSwiper() {
+        if (swiper) {
+            swiper.destroy(true, true);
+        }
+        swiper = new Swiper('.swiper-container', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            centeredSlides: true,
+            loop: false,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            },
+            effect: 'cards',
+            grabCursor: true
+        });
+    }
 
     // 검색 함수
     async function searchWikipedia(searchTerm) {
@@ -18,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
             displayResults(data.query.search);
         } catch (error) {
             console.error('Error:', error);
-            resultsDiv.innerHTML = `<p class="result-item">검색 중 오류가 발생했습니다: ${error.message}</p>`;
+            resultsDiv.innerHTML = `<div class="swiper-slide"><p>검색 중 오류가 발생했습니다: ${error.message}</p></div>`;
+            initSwiper();
         } finally {
             showLoading(false);
         }
@@ -27,12 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 결과 표시 함수
     function displayResults(results) {
         if (results.length === 0) {
-            resultsDiv.innerHTML = '<p class="result-item">검색 결과가 없습니다.</p>';
+            resultsDiv.innerHTML = '<div class="swiper-slide"><p>검색 결과가 없습니다.</p></div>';
+            initSwiper();
             return;
         }
 
         const resultsHtml = results.map(result => `
-            <div class="result-item">
+            <div class="swiper-slide">
                 <h2>
                     <a href="https://ko.wikipedia.org/wiki/${encodeURIComponent(result.title)}" 
                        target="_blank" 
@@ -45,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
 
         resultsDiv.innerHTML = resultsHtml;
+        initSwiper();
     }
 
     // 로딩 표시 함수
